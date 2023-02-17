@@ -1,0 +1,24 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <ng-container *ngIf="addressesArray">
+    <div *ngFor="let address of addressesArray.controls; index as i">
+      <div [formGroupName]="i">
+        <label>Address {{ i + 1 }}:</label>
+        <input type="text" formControlName="street" required>
+        <div *ngIf="address?.get('street')?.invalid && address?.get('street')?.touched">
+          <p *ngIf="address?.get('street')?.errors?.['required']">Street is required</p>
+        </div>
+        <input type="text" formControlName="city" required>
+        <div *ngIf="address?.get('city')?.invalid && address?.get('city')?.touched">
+          <p *ngIf="address?.get('city')?.errors?.['required']">City is required</p>
+        </div>
+        <input type="text" formControlName="state" required>
+        <div *ngIf="address?.get('state')?.invalid && address?.get('state')?.touched">
+          <p *ngIf="address?.get('state')?.errors?.['required']">State is required</p>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <button type="button" (click)="addAddress()">Add Address</button>
+  <input type="file" formControlName="file" required>
+  <button type="submit" [disabled]="form.invalid">Submit</button>
+</form>
